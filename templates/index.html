@@ -1,0 +1,105 @@
+<!DOCTYPE HTML>
+<!--
+	Editorial by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>AT2 - Machine Learning as a Service </title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="static/assets/css/main.css" />
+	</head>
+	<body class="is-preload">
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Main -->
+					<div id="main">
+						<div class="inner">
+
+							<!-- Header -->
+								<header id="header">
+
+									<ul class="icons">
+										<li><a href="#" class="icon fa-envelope-open"><span class="label">Email</span></a></li>
+										<li><a href="mailto:marisara.satrulee@student.uts.edu.au"><span class="label">marisara.satrulee@student.uts.edu.au</span></a></li>
+
+									</ul>
+								</header>
+
+							<section id="textbody">
+									<div class="content">
+										<header>
+											<h1>AT2 -<br />
+											Machine Learning as a Service</h1>
+											<p>Assignment Questions</p>
+										</header>
+
+											<li>This project firstly aims to build use a machine learning algorithm to predict the sales revenue for a given item in a specific store at a given date.</li>
+											<li>This project secondly aims to build use a time-series analysis algorithm to forecast the total sales revenue across all stores and items for the next 7 days.</li>
+
+									</div>
+							</section>
+
+							<section>
+								<h2>List of endpoints</h2>
+								<li><b>‘/’ </b>(GET): Displaying a brief description of the project objectives, list of endpoints, expected input parameters and output format of the model, link to the Github repo related to this project</li>
+								<li><b>‘/health/’ </b>(GET): Returning status code 200 with a string with a welcome message of your choice</li>
+								<li><b>‘/sales/national/’ </b>(GET): Returning next 7 days sales volume forecast for an input date</li>
+								<li><b>‘/sales/stores/items/’ </b>(GET): Returning predicted sales volume for an input item, store and date</li>
+
+							</section>
+
+							<section>
+								<h2>Question One: predict the sales revenue for a given item in a specific store at a given date</h2>
+								    <form action="{{ url_for('prediction') }}" method="post">
+										<label for="date">Date between 2011-02-06 to 2015-04-12</label>
+										<input type="text" id="date" name="date" placeholder="Enter Date">
+										<label for="item_id">Item ID</label>
+										<input type="text" id="item_id" name="item_id" placeholder="Enter Item ID">
+										<label for="store_id">Store ID</label>
+										<input type="text" id="store_id" name="store_id" placeholder="Enter Store ID">
+										<br>
+										<ul class="actions">
+											<li><button type="submit">Ok</button></li>
+										</ul>
+									</form>
+							</section>
+
+							<section>
+								<h2>Question Two: forecast the sales volume for the next 7 days, starting from the input date</h2>
+								    <form action="{{ url_for('forecast') }}" method="post">
+										<label for="date">Date between 2011-02-06 to 2015-04-12</label>
+										<input type="text" id="input_date" name="input_date" placeholder="Enter Date">
+
+										<br>
+										<ul class="actions">
+											<li><button type="submit">Ok</button></li>
+										</ul>
+									</form>
+							</section>
+
+
+
+							<!-- Footer -->
+								<footer id="footer">
+									<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
+								</footer>
+
+						</div>
+					</div>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="static/assets/js/jquery.min.js"></script>
+			<script src="static/assets/js/browser.min.js"></script>
+			<script src="static/assets/js/breakpoints.min.js"></script>
+			<script src="static/assets/js/util.js"></script>
+			<script src="static/assets/js/main.js"></script>
+
+	</body>
+</html>
