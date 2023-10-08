@@ -30,10 +30,11 @@ def prediction():
     return redirect(url_for('get_sales_prediction'))
 
 
-@app.route("/sales/stores/items", methods=['GET'])
+@app.route("/sales/stores/items")
 def get_sales_prediction():
     y_pred = np.load('data/y_pred.npy')
     return render_template('prediction.html', y_pred=y_pred)
+
 
 @app.route("/forecast", methods=['POST'])
 def forecast():
@@ -45,7 +46,8 @@ def forecast():
     return redirect(url_for('get_sales_forecast'))
 
 
-@app.route("/sales/national/", methods=['GET'])
+@app.route("/sales/national/")
 def get_sales_forecast():
     forecast_vol = np.load('data/forecast_values.npy')
     return render_template('forecast.html', forecast_vol=forecast_vol)
+
