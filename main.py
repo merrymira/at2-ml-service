@@ -54,7 +54,3 @@ def get_sales_forecast():
 def get_sales_prediction():
     y_pred = np.load('data/y_pred.npy')
     return render_template('prediction.html', y_pred=y_pred)
-
-
-if __name__ == "__main__":
-    app.run(debug=True)
