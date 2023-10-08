@@ -19,20 +19,24 @@
 				<!-- Main -->
 					<div id="main">
 						<div class="inner">
+
 							<section id="textbody">
-								<div class="content">
-									<header>
-										<h1>Sales Forecast for the next 7 days</h1>
-									</header>
-									<ul>
-									{% for value in forecast_vol %}
-										<li>{{ value }}</li>
-									{% endfor %}
-									</ul>
-								</div>
+									<div class="content">
+                                        <header>
+                                            <h1>Sales Forecast for the next 7 days</h1>
+                                        </header>
+                                        <ul>
+                                        {% for value in forecast_vol %}
+                                            <li>{{ value }}</li>
+                                        {% endfor %}
+                                        </ul>									
+                                    </div>
 							</section>
+
+
 						</div>
 					</div>
+
 			</div>
 
 		<!-- Scripts -->
