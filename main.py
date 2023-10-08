@@ -1,5 +1,4 @@
-import pandas as pd
-from flask import Flask, request, render_template, redirect, url_for, sessions
+from flask import Flask, request, render_template, redirect, url_for
 import numpy as np
 from prediction import sales_prediction
 from forecast import forecast_nation
@@ -27,30 +26,26 @@ def prediction():
 
     # Call the sales prediction function with the form data
     sales_prediction(date, item_id, store_id)
-
     # Redirect to the desired route where you want to display the prediction
     return redirect(url_for('get_sales_prediction'))
-
-
-@app.route("/forecast", methods=['POST'])
-def forecast():
-    input_date = request.form['input_date']
-
-    # Call the sales forecast function with the form data
-    forecast_nation(input_date)
-
-    # Redirect to the desired route where you want to display the prediction
-    return redirect(url_for('get_sales_forecast'))
-
-
-@app.route("/sales/national", methods=['GET'])
-def get_sales_forecast():
-    forecast_vol = np.load('data/forecast_values.npy')
-
-    return render_template('forecast.html', forecast_vol=forecast_vol)
 
 
 @app.route("/sales/stores/items", methods=['GET'])
 def get_sales_prediction():
     y_pred = np.load('data/y_pred.npy')
     return render_template('prediction.html', y_pred=y_pred)
+
+@app.route("/forecast", methods=['POST'])
+def forecast():
+    input_date = request.form['input_date']
+
+    # Call the forecast_nation function to calculate the sales for the next 7 days
+    forecast_nation(input_date)
+    # Redirect to the desired route where you want to display the prediction
+    return redirect(url_for('get_sales_forecast'))
+
+
+@app.route("/sales/national/", methods=['GET'])
+def get_sales_forecast():
+    forecast_vol = np.load('data/forecast_values.npy')
+    return render_template('forecast.html', forecast_vol=forecast_vol)
