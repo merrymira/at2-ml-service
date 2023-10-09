@@ -51,3 +51,8 @@ def get_sales_forecast():
     forecast_vol = np.load('data/forecast_values.npy')
     return render_template('forecast.html', forecast_vol=forecast_vol)
 
+from main import app
+
+if __name__ == "__main__":
+    app.run()
+
