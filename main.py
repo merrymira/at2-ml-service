@@ -36,7 +36,7 @@ def get_sales_prediction():
     return render_template('prediction.html', y_pred=y_pred)
 
 
-@app.route("/sales/national/", methods=['POST'])
+@app.route("/sales/national/", methods=['GET', 'POST'])
 def forecast():
     input_date = request.form['input_date']
 
@@ -57,7 +57,4 @@ def forecast():
 
     return render_template('forecast.html', forecast_vol=forecast_vol)
 
-
-if __name__ == "__main__":
-    app.run()
 
