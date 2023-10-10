@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, redirect, url_for
-import numpy as np
 from prediction import sales_prediction
 from forecast import forecast_nation
+import numpy as np
 
 
 app = Flask(__name__)
@@ -36,25 +36,17 @@ def get_sales_prediction():
     return render_template('prediction.html', y_pred=y_pred)
 
 
-@app.route("/sales/national/", methods=['GET', 'POST'])
+@app.route("/forecast", methods=['POST'])
 def forecast():
     input_date = request.form['input_date']
 
-    import statsmodels.api as sm
-    import pandas as pd
+    # Call the forecast_nation function to calculate the sales for the next 7 days
+    forecast_nation(input_date)
+    # Redirect to the desired route where you want to display the prediction
+    return redirect(url_for('get_sales_forecast'))
 
-    data_df = pd.read_csv('data/df_forecast.csv')
-    data_df = data_df.set_index('date_2')
 
-    data = data_df.loc['2011-02-06': input_date]
-
-    # Fit an ARIMA model (you may need to tune hyperparameters)
-    model = sm.tsa.ARIMA(data, order=(2, 1, 1))
-    results = model.fit()
-
-    # Make forecasts for the next 7 days starting from the specified date
-    forecast_vol = results.get_forecast(steps=7).predicted_mean
-
+@app.route("/sales/national/")
+def get_sales_forecast():
+    forecast_vol = np.load('data/forecast_values.npy')
     return render_template('forecast.html', forecast_vol=forecast_vol)
-
-
