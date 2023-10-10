@@ -20,13 +20,13 @@ def healthcheck():
 
 @app.route("/prediction", methods=['POST'])
 def prediction():
-    date = request.form['date']
+
+    date_obj = request.form['date']
     item_id = request.form['item_id']
     store_id = request.form['store_id']
 
-    # Call the sales prediction function with the form data
-    sales_prediction(date, item_id, store_id)
-    # Redirect to the desired route where you want to display the prediction
+    sales_prediction(date_obj, item_id, store_id)
+
     return redirect(url_for('get_sales_prediction'))
 
 
@@ -36,22 +36,27 @@ def get_sales_prediction():
     return render_template('prediction.html', y_pred=y_pred)
 
 
-@app.route("/forecast", methods=['POST'])
+@app.route("/sales/national/", methods=['POST'])
 def forecast():
     input_date = request.form['input_date']
 
-    # Call the forecast_nation function to calculate the sales for the next 7 days
-    forecast_nation(input_date)
-    # Redirect to the desired route where you want to display the prediction
-    return redirect(url_for('get_sales_forecast'))
+    import statsmodels.api as sm
+    import pandas as pd
 
+    data_df = pd.read_csv('data/df_forecast.csv')
+    data_df = data_df.set_index('date_2')
 
-@app.route("/sales/national/")
-def get_sales_forecast():
-    forecast_vol = np.load('data/forecast_values.npy')
+    data = data_df.loc['2011-02-06': input_date]
+
+    # Fit an ARIMA model (you may need to tune hyperparameters)
+    model = sm.tsa.ARIMA(data, order=(2, 1, 1))
+    results = model.fit()
+
+    # Make forecasts for the next 7 days starting from the specified date
+    forecast_vol = results.get_forecast(steps=7).predicted_mean
+
     return render_template('forecast.html', forecast_vol=forecast_vol)
 
-from main import app
 
 if __name__ == "__main__":
     app.run()
